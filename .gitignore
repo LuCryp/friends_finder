@@ -6,7 +6,6 @@ welcome_survey_simple_v1.csv
 encrypt_files.py
 app.py
 welcome_survey_simple_v2.csv
-welcome_survey_clustering_pipeline_v2.pkl
 welcome_survey_cluster_names_and_descriptions_v2.json
 fernet_key.txt
 crypto_utils.py

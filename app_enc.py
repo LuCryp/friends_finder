@@ -15,7 +15,7 @@ st.title("Znajdz znajomych")
 env = os.environ
 
 # Nazwy plików
-MODEL_NAME = "welcome_survey_clustering_pipeline_v2.enc"
+MODEL_NAME = "welcome_survey_clustering_pipeline_v2.pkl"
 DATA = "welcome_survey_simple_v2.csv.enc"                # zaszyfrowany
 CLUSTER_NAMES_AND_DESCRIPTIONS = "welcome_survey_cluster_names_and_descriptions_v2.json.enc"  # zaszyfrowany
 
@@ -42,28 +42,10 @@ def load_encrypted(path: str) -> bytes:
     with open(path, "rb") as f:
         return fernet.decrypt(f.read())
 
+@st.cache_data
 def get_model():
-    # odszyfrowanie pliku do bytes
-    raw = load_encrypted(MODEL_NAME)
-    if not raw:
-        raise ValueError("Odszyfrowany model jest pusty!")
+    return load_model(MODEL_NAME)
 
-    # Tworzymy tymczasowy plik .pkl z kontrolowaną nazwą
-    tmp_path = os.path.join(tempfile.gettempdir(), "tmp_model")
-
-    try:
-        with open(tmp_path, "wb") as f:
-            f.write(raw)
-
-        # Wczytanie modelu z PyCaret
-        model = load_model(tmp_path)
-
-    finally:
-        # Sprzątanie pliku – usuń, jeśli plik istnieje
-        if os.path.exists(tmp_path):
-            os.remove(tmp_path)
-
-    return model
 
 @st.cache_data
 def get_cluster_names_and_descriptions():
