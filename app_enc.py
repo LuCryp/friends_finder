@@ -43,19 +43,24 @@ def load_encrypted(path: str) -> bytes:
 
 def get_model():
     # odszyfrowanie pliku do bytes
-    raw = load_encrypted(MODEL_NAME)  # MODEL_NAME = "welcome_survey_clustering_pipeline_v2"
+    raw = load_encrypted(MODEL_NAME)
+    if not raw:
+        raise ValueError("Odszyfrowany model jest pusty!")
 
-    # Tworzymy tymczasowy plik .pkl z nazwą kontrolowaną
-    tmp_path = os.path.join(tempfile.gettempdir(), "tmp_model")
+    # Tworzymy tymczasowy plik .pkl z kontrolowaną nazwą
+    tmp_path = os.path.join(tempfile.gettempdir(), "tmp_model.pkl")
 
-    with open(tmp_path, "wb") as f:
-        f.write(raw)
+    try:
+        with open(tmp_path, "wb") as f:
+            f.write(raw)
 
-    # PyCaret wczytuje model z tego pliku
-    model = load_model(tmp_path)
+        # Wczytanie modelu z PyCaret
+        model = load_model(tmp_path)
 
-    # Sprzątanie pliku
-    os.remove(tmp_path)
+    finally:
+        # Sprzątanie pliku – usuń, jeśli plik istnieje
+        if os.path.exists(tmp_path):
+            os.remove(tmp_path)
 
     return model
 
