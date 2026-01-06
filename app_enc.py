@@ -1,4 +1,5 @@
 # git remote add origin https://github.com/LuCryp/friends_finder.git
+# https://friendsfinder-encrypted-lk.streamlit.app/
 
 import json
 import streamlit as st
@@ -14,7 +15,7 @@ st.title("Znajdz znajomych")
 env = os.environ
 
 # Nazwy plików
-MODEL_NAME = "welcome_survey_clustering_pipeline_v2.enc"  # jawny
+MODEL_NAME = "welcome_survey_clustering_pipeline_v2.enc"
 DATA = "welcome_survey_simple_v2.csv.enc"                # zaszyfrowany
 CLUSTER_NAMES_AND_DESCRIPTIONS = "welcome_survey_cluster_names_and_descriptions_v2.json.enc"  # zaszyfrowany
 
@@ -48,7 +49,7 @@ def get_model():
         raise ValueError("Odszyfrowany model jest pusty!")
 
     # Tworzymy tymczasowy plik .pkl z kontrolowaną nazwą
-    tmp_path = os.path.join(tempfile.gettempdir(), "tmp_model.pkl")
+    tmp_path = os.path.join(tempfile.gettempdir(), "tmp_model")
 
     try:
         with open(tmp_path, "wb") as f:
