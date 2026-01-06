@@ -15,7 +15,7 @@ st.title("Znajdz znajomych")
 env = os.environ
 
 # Nazwy plików
-MODEL_NAME = "welcome_survey_clustering_pipeline_v2.pkl"
+MODEL_NAME = "welcome_survey_clustering_pipeline_v2"
 DATA = "welcome_survey_simple_v2.csv.enc"                # zaszyfrowany
 CLUSTER_NAMES_AND_DESCRIPTIONS = "welcome_survey_cluster_names_and_descriptions_v2.json.enc"  # zaszyfrowany
 
